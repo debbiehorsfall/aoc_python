@@ -5,10 +5,9 @@ class Day(object):
         self.parser = parser
 
     def remove_rolls(self, paper):
-        incs = [(0,1), (1,0), (0,-1), (-1,0), (1,1), (1,-1), (-1,1), (-1,-1)]
         remove = []
         for p in paper:
-            count = sum(1 for i in incs if (utils.add_coord(p,i) in paper))
+            count = sum(1 for n in utils.get_8_neighbours(p) if n in paper)
             if count < 4:
                 remove.append(p)
 
@@ -19,11 +18,7 @@ class Day(object):
 
     def calculate(self):
         lines = self.parser.get_lines()
-        paper = set()
-        for y, l in enumerate(lines):
-            for x, char in enumerate(l):
-                if char == "@":
-                    paper.add((x,y))
+        paper = utils.get_coords(lines, "@")
 
         removed = self.remove_rolls(paper)
         self.sum_1 = removed

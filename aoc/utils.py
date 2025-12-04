@@ -3,7 +3,6 @@
 import os
 from collections import namedtuple
 
-
 def memoize(func):
     cache = dict()
 
@@ -36,3 +35,21 @@ def rotate(lines):
 
 def flip(lines):
     return [line[::-1] for line in lines]
+
+def get_coords(lines, char):
+    coords = set()
+    for y, l in enumerate(lines):
+        for x, c in enumerate(l):
+            if c == char:
+                coords.add((x,y))
+    return coords
+
+eight_incs = [(0,1), (1,0), (0,-1), (-1,0), (1,1), (1,-1), (-1,1), (-1,-1)]
+four_incs = [(0,1), (1,0), (0,-1), (-1,0)]
+
+def get_4_neighbours(coord):
+    return [add_coord(coord, i) for i in four_incs]
+
+def get_8_neighbours(coord):
+    return [add_coord(coord, i) for i in eight_incs]
+
